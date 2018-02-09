@@ -1,0 +1,2 @@
+class Basketball < Sport
+end
