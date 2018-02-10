@@ -22,6 +22,8 @@ gem 'turbolinks', '~> 5'
 
 gem 'bcrypt', '~> 3.1.7'
 
+gem "mysql2", "~>0.4.10"
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
