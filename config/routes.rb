@@ -26,4 +26,5 @@ Rails.application.routes.draw do
   # end
 
   # resources :users, format: false
+  get 'test' => 'tests#index'
 end
