@@ -24,6 +24,7 @@ class User < ApplicationRecord
 
     def check_post
       if posts.size < 5
+        errors.add(:base, 'cannot destroy')
         throw(:abort)
       end
     end
