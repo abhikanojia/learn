@@ -1,5 +1,6 @@
 class User < ApplicationRecord
-  # has_many :posts, dependent: :destroy
+  self.primary_key = "test"
+  has_many :posts, -> { order(:created_at) },dependent: :destroy
   # has_many :addresses
 
   # around_save :around_save_callback
