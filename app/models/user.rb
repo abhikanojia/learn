@@ -1,23 +1,37 @@
 class User < ApplicationRecord
-  has_many :posts
+  before_destroy :check_posts
+  has_many :posts, dependent: :destroy
   has_many :addresses
 
-  around_save :around_save_callback
-  before_validation :ensure_user_has_name
-  after_validation :after_validation_callback
   # around_save :around_save_callback
+  # before_validation :ensure_user_has_name
+  # after_validation :after_validation_callback
+  # # around_save :around_save_callback
+
+  after_initialize :initalized_callback
 
 
 
-  before_save :before_save_callback
-  after_save :after_save_callback
+  # before_save :before_save_callback
+  # after_save :after_save_callback
 
-  before_create :before_create_callback
-  after_create :after_create_callback
+  # before_create :before_create_callback
+  # after_create :after_create_callback
+
 
   validates :name, goodness: true
 
   private
+
+    def initalized_callback
+      logger.info "initalized_callback"
+    end
+
+    def check_posts
+      if posts.size < 5
+        throw(:abort)
+      end
+    end
 
     def ensure_user_has_name
       puts "Before validation callback.."

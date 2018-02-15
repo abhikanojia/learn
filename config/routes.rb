@@ -26,4 +26,7 @@ Rails.application.routes.draw do
   # end
 
   # resources :users, format: false
+
+  get "index" => "static#index"
+  get "in" => "static#test_name", as: "in"
 end
