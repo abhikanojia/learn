@@ -1,6 +1,6 @@
 class User < ApplicationRecord
-  has_many :posts, dependent: :destroy
-  has_many :addresses
+  # has_many :posts, dependent: :destroy
+  # has_many :addresses
 
   # around_save :around_save_callback
   # before_validation :ensure_user_has_name
@@ -9,7 +9,7 @@ class User < ApplicationRecord
 
   # after_initialize :initalized_callback
 
-  before_destroy :check_post, prepend: true
+  # before_destroy :check_post, prepend: true
 
   # before_save :before_save_callback
   # after_save :after_save_callback
@@ -17,10 +17,28 @@ class User < ApplicationRecord
   # before_create :before_create_callback
   # after_create :after_create_callback
 
+  define_model_callbacks :publish, only: [:before, :after]
+
+  before_publish :check_if_publishable
+  after_publish :notify_user
 
   validates :name, goodness: true
 
+  def publish
+    run_callbacks :publish do
+      logger.debug "Publishing...."
+    end
+  end
+
   private
+
+    def check_if_publishable
+      logger.debug "checking... if publishable"
+    end
+
+    def notify_user
+      logger.debug "notify all user."
+    end
 
     def check_post
       if posts.size < 5
