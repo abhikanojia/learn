@@ -2,26 +2,28 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :addresses
 
-  around_save :around_save_callback
-  before_validation :ensure_user_has_name
-  after_validation :after_validation_callback
   # around_save :around_save_callback
+  # before_validation :ensure_user_has_name
+  # after_validation :after_validation_callback
+  # # around_save :around_save_callback
+
+  # after_initialize :initalized_callback
 
   before_destroy :check_post, prepend: true
 
-  before_save :before_save_callback
-  after_save :after_save_callback
+  # before_save :before_save_callback
+  # after_save :after_save_callback
 
-  before_create :before_create_callback
-  after_create :after_create_callback
+  # before_create :before_create_callback
+  # after_create :after_create_callback
+
 
   validates :name, goodness: true
 
   private
 
     def check_post
-      puts "check_post"
-      if posts.size > 5
+      if posts.size < 5
         throw(:abort)
       end
     end
