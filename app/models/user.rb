@@ -1,4 +1,9 @@
 class User < ApplicationRecord
+
+  def initialize
+    logger.info "init"
+    initalized_callback
+  end
   before_destroy :check_posts
   has_many :posts, dependent: :destroy
   has_many :addresses
@@ -8,7 +13,7 @@ class User < ApplicationRecord
   # after_validation :after_validation_callback
   # # around_save :around_save_callback
 
-  after_initialize :initalized_callback
+  # after_initialize :initalized_callback
 
 
 
