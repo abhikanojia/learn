@@ -66,4 +66,6 @@ Rails.application.routes.draw do
   # resources :users, path: 'images'
 
   # resource :tooth # add irregular to inflections.rb
+
+  resources :tests
 end
