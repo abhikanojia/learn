@@ -27,7 +27,7 @@ Rails.application.routes.draw do
 
   # resources :users, format: false
 
-  # get "index" => "static#index"
+  get "index" => "test#index"
   # get "in" => "static#test_name", as: "in"
 
   # resources :posts do
@@ -35,7 +35,9 @@ Rails.application.routes.draw do
   # end
   # resources :comments, only: [:show, :edit, :update, :destroy]
 
-  concern :commentable do
-    resources :users
-  end
+  # concern :commentable do
+  #   resources :users
+  # end
+
+  resources :books
 end
