@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  self.primary_key = "test"
+  ATTRIBUTES = %w(id name created_at updated_at)
   has_many :posts, -> { order(:created_at) },dependent: :destroy
   # has_many :addresses
 
@@ -28,6 +28,15 @@ class User < ApplicationRecord
   def publish
     run_callbacks :publish do
       logger.debug "Publishing...."
+    end
+  end
+
+  def self.to_csv
+    CSV.generate(headers: true) do |csv|
+      csv << ATTRIBUTES
+      all.each do |user|
+        csv << user.attributes.values_at(*ATTRIBUTES)
+      end
     end
   end
 

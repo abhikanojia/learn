@@ -1,5 +1,5 @@
 require_relative 'boot'
-
+require 'csv'
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
@@ -15,5 +15,11 @@ module Learn
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
     config.autoload_paths += %W(#{config.root}/app/models/sports)
+
+    config.generators do |g|
+      g.assets false
+      g.helper false
+      g.test_framework false
+    end
   end
 end

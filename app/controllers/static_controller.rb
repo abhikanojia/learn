@@ -1,19 +1,22 @@
 class StaticController < ApplicationController
-  before_action :set_this
-  prepend_before_action :something_else, :prepend_action_second
+  # before_action :set_this
+  # prepend_before_action :something_else, :prepend_action_second
   # skip_before_action :prepend_action_second
-  after_action :after_action_static
+  # after_action :after_action_static
 
   def index
-    logger.info "index action....."
+    @users = User.all
+    # logger.info "index action....."
   end
 
   def test_name
     puts "test called"
+    render :index
   end
 
   private
     def set_this
+      debugger
       puts "before_action"
     end
 
@@ -26,6 +29,7 @@ class StaticController < ApplicationController
     end
 
     def after_action_static
+      debugger
       logger.info "after_action_static.."
     end
 end

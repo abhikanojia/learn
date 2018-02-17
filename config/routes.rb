@@ -28,7 +28,7 @@ Rails.application.routes.draw do
   # resources :users, format: false
 
   get "index" => "test#index"
-  # get "in" => "static#test_name", as: "in"
+  get "in" => "static#test_name", as: "in"
 
   # resources :posts do
   #   resources :comments, except: [:show, :edit, :update, :destroy]
@@ -39,5 +39,5 @@ Rails.application.routes.draw do
   #   resources :users
   # end
 
-  resources :books
+  resources :users
 end
