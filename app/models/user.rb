@@ -1,5 +1,8 @@
 class User < ApplicationRecord
   ATTRIBUTES = %w(id name created_at updated_at)
+  default_scope { where("created_at < ?", Time.current) }
+  scope :without_post, -> { includes(:posts).where("posts.id IS NULL").references(:posts) }
+  # scope :abhishek, -> { where(name: "ahishek") }
   has_many :posts, -> { order(:created_at) },dependent: :destroy
   # has_many :addresses
 
@@ -29,6 +32,10 @@ class User < ApplicationRecord
     run_callbacks :publish do
       logger.debug "Publishing...."
     end
+  end
+
+  def self.abhishek
+    where(name: "abhishe")
   end
 
   def self.to_csv
