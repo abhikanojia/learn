@@ -1,10 +1,31 @@
 class User < ApplicationRecord
+  attr_accessor :test_val
+
+  attribute :test_val, :string
+
+  def test_val=(val)
+    attribute_will_change!('test_val') if test_val != val
+    @test_val = val
+  end
+
+  def name=(val)
+    self.test_val = val.split(/\w/).second
+    @name = val.split(/\w/).first
+  end
+
+
+  def save
+    changes_applied
+    super
+  end
+
   ATTRIBUTES = %w(id name created_at updated_at)
-  default_scope { where("created_at < ?", Time.current) }
+  # default_scope { where("created_at < ?", Time.current) }
   scope :without_post, -> { includes(:posts).where("posts.id IS NULL").references(:posts) }
   # scope :abhishek, -> { where(name: "ahishek") }
-  has_many :posts, -> { order(:created_at) },dependent: :destroy
+  # has_many :stories, dependent: :destroy, class_name: "Post", foreign_key: "test_id"
   # has_many :addresses
+  has_many :posts, dependent: :destroy
 
   # around_save :around_save_callback
   # before_validation :ensure_user_has_name
@@ -16,18 +37,18 @@ class User < ApplicationRecord
   # before_destroy :check_post, prepend: true
 
   # before_save :before_save_callback
-  # after_save :after_save_callback
+  after_save :after_save_callback
 
   # before_create :before_create_callback
-  # after_create :after_create_callback
+  after_create :after_create_callback, on: :commit
 
   define_model_callbacks :publish, only: [:before, :after]
 
   before_publish :check_if_publishable
   after_publish :notify_user
-
-  validates :name, goodness: true
-
+  validates :name, presence: true
+  # validates_with GoodnessValidator
+  # validates :name, goodness: true
   def publish
     run_callbacks :publish do
       logger.debug "Publishing...."
@@ -91,6 +112,7 @@ class User < ApplicationRecord
     end
 
     def after_create_callback
+      debugger
       puts "after_create_callback"
     end
 end

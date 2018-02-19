@@ -10,7 +10,7 @@ class UsersController < ApplicationController
       format.csv { send_data @users.to_csv }
       format.pdf { send_data render @users }
       # format.csv { send_data @users.to_csv, filename: 'test.csv' }
-      format.html
+      format.html { render partial: "user", collection: @users.posts }
     end
   end
 

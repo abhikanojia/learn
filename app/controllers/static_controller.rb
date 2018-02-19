@@ -5,7 +5,8 @@ class StaticController < ApplicationController
   # after_action :after_action_static
 
   def index
-    @users = User.all
+    # @users = User.all
+    @x = User.first
     # logger.info "index action....."
   end
 
